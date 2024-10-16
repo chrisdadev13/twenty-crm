@@ -98,34 +98,36 @@ const createPerson = async (
   values: CreatePersonFormProps,
 ): Promise<{ data: Person } | { error: { message: string } }> => {
   try {
-    const response = await axios.post<Person>(
-      "https://api.twenty.com/rest/people",
-      {
-        name: {
-          firstName: values.firstName,
-          lastName: values.lastName,
-        },
-        emails: {
-          primaryEmail: values.primaryEmail,
-        },
-        phones: {
-          primaryPhoneNumber: values.primaryPhoneNumber,
-        },
-        linkedinLink: {
-          primaryLinkLabel: values.linkedinLink ?? "",
-          primaryLinkUrl: values.linkedinLink ?? "",
-        },
-        jobTitle: values.jobTitle,
-        city: values.city,
-        ...(values.companyId!.length ? { companyId: values } : {}),
-        position: 0,
-        createdBy: { source: "API" },
-        avatarUrl: `https://api.dicebear.com/9.x/notionists/svg?seed=${values.primaryEmail}`,
+    const data = {
+      name: {
+        firstName: values.firstName,
+        lastName: values.lastName,
       },
-      {
-        headers: useAuthHeaders(),
+      emails: {
+        primaryEmail: values.primaryEmail,
       },
-    );
+      phones: {
+        primaryPhoneNumber: values.primaryPhoneNumber,
+      },
+      linkedinLink: {
+        primaryLinkLabel: values.linkedinLink ?? "",
+        primaryLinkUrl: values.linkedinLink ?? "",
+      },
+      jobTitle: values.jobTitle ?? "",
+      city: values.city ?? "",
+      position: 0,
+      ...(values.companyId !== ""
+        ? {
+          companyId: values.companyId,
+        }
+        : {}),
+      createdBy: { source: "API" },
+      avatarUrl: `https://api.dicebear.com/9.x/notionists/svg?seed=${values.primaryEmail}`,
+    };
+
+    const response = await axios.post<Person>("https://api.twenty.com/rest/people", data, {
+      headers: useAuthHeaders(),
+    });
 
     if (response.status === 200 || response.status === 201) {
       showToast({
@@ -153,12 +155,14 @@ const createPerson = async (
     });
 
     if (isAxiosError(error)) {
+      console.error(error.cause);
       return {
         error: {
           message: error.response?.data.message ?? "An unexpected error occurred",
         },
       };
     } else {
+      console.error(error);
       return {
         error: {
           message: "An unexpected error occurred",

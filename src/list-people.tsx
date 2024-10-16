@@ -6,8 +6,6 @@ import CreateCompanyForm from "./create-company";
 export default function ListPeople() {
   const { people } = useGetPeople();
 
-  console.log(people[1].pointOfContactForOpportunities);
-
   return (
     <List isShowingDetail>
       {people.map((person) => (

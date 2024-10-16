@@ -41,12 +41,12 @@ export type Company = {
   deletedAt?: string | null;
   name: string;
   domainName:
-    | string
-    | {
-        __typename?: "Links";
-        primaryLinkUrl: string;
-        primaryLinkLabel: string;
-      };
+  | string
+  | {
+    __typename?: "Links";
+    primaryLinkUrl: string;
+    primaryLinkLabel: string;
+  };
   address: string;
   accountOwnerId?: string | null;
   position?: number;

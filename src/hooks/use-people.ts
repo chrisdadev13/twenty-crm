@@ -51,8 +51,6 @@ export function useGetPeople() {
     headers: useAuthHeaders(),
   });
 
-  console.dir(data?.data.people[1].pointOfContactForOpportunities, { depth: null });
-
   return {
     people: data?.data.people ?? [],
     isLoading,
