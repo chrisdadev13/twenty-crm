@@ -3,6 +3,7 @@ import { List, Image, Icon, ActionPanel, Action, Toast, showToast } from "@rayca
 import { useGetCompanies } from "./hooks/use-company";
 import CreatePersonForm from "./create-person";
 import CreateCompanyForm from "./create-company";
+import CreateOpportunityForm from "./create-opportunity";
 
 export default function ListCompanies() {
   const { companies, isLoading, error } = useGetCompanies();
@@ -52,7 +53,7 @@ export default function ListCompanies() {
                 <Action.Push
                   icon={Icon.Building}
                   title="Add Company"
-                  shortcut={{ modifiers: ["cmd"], key: "o" }}
+                  shortcut={{ modifiers: ["cmd"], key: "b" }}
                   target={<CreateCompanyForm />}
                 />
                 <Action.Push
@@ -60,6 +61,12 @@ export default function ListCompanies() {
                   title="Add People"
                   shortcut={{ modifiers: ["cmd", "ctrl"], key: "p" }}
                   target={<CreatePersonForm />}
+                />
+                <Action.Push
+                  icon={Icon.Key}
+                  title="Add Opportunity"
+                  shortcut={{ modifiers: ["cmd"], key: "o" }}
+                  target={<CreateOpportunityForm />}
                 />
               </ActionPanel>
             }

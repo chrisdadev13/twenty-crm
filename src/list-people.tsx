@@ -2,6 +2,7 @@ import { List, Image, Icon, ActionPanel, Action } from "@raycast/api";
 import { useGetPeople } from "./hooks/use-people";
 import CreatePersonForm from "./create-person";
 import CreateCompanyForm from "./create-company";
+import CreateOpportunityForm from "./create-opportunity";
 
 export default function ListPeople() {
   const { people } = useGetPeople();
@@ -29,8 +30,14 @@ export default function ListPeople() {
               <Action.Push
                 icon={Icon.Building}
                 title="Add Company"
-                shortcut={{ modifiers: ["cmd"], key: "o" }}
+                shortcut={{ modifiers: ["cmd"], key: "b" }}
                 target={<CreateCompanyForm />}
+              />
+              <Action.Push
+                icon={Icon.Key}
+                title="Add Opportunity"
+                shortcut={{ modifiers: ["cmd"], key: "o" }}
+                target={<CreateOpportunityForm />}
               />
             </ActionPanel>
           }
